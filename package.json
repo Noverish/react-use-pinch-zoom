@@ -1,0 +1,34 @@
+{
+  "name": "react-use-pinch-zoom",
+  "version": "0.0.1",
+  "author": "Hyunsub Kim (noverish)",
+  "description": "A react hook for pinch-to-zoom gesture interaction.",
+  "keywords": [
+    "react",
+    "reactjs",
+    "pinch",
+    "zoom",
+    "hook"
+  ],
+  "files": [
+    "lib/"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Noverish/react-use-pinch-zoom.git"
+  },
+  "homepage": "https://github.com/Noverish/react-use-pinch-zoom#readme",
+  "bugs": "https://github.com/Noverish/react-use-pinch-zoom/issues",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@types/react": "^17.0.0",
+    "react": "^17.0.1",
+    "typescript": "^4.1.3"
+  }
+}

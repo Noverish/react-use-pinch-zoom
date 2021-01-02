@@ -1,0 +1,21 @@
+
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["dom", "es2015"],
+    "target": "es5",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "outDir": "./lib",
+  },
+  "include": [
+    "src/*"
+  ],
+}
