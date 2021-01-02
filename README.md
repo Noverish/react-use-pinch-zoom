@@ -9,10 +9,7 @@ A react hook for pinch-to-zoom gesture interaction.
 
 ## Demo
 
-<!-- ![demo video](/static/demo1.mp4) -->
-<p align="center">
-  <video src="/static/demo1.mp4" autoplay><video>
-</p>
+![demo1](/static/demo1.gif)
 
 ## Usage
 
