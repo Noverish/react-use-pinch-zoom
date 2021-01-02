@@ -1,9 +1,18 @@
 
 ![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)
 
+Most of the code is from [react-pinch-and-zoom](https://github.com/conradlo/react-pinch-and-zoom)
+
 # React Pinch Zoom Hook
 
 A react hook for pinch-to-zoom gesture interaction.
+
+## Demo
+
+<!-- ![demo video](/static/demo1.mp4) -->
+<p align="center">
+  <video src="/static/demo1.mp4" autoplay><video>
+</p>
 
 ## Usage
 
@@ -23,7 +32,7 @@ import usePinchZoom from 'react-use-pinch-zoom';
 
 ```tsx
 function App() {
-  const [containerProps, contentProps] = usePinchToZoom<HTMLDivElement, HTMLImageElement>();
+  const [containerProps, contentProps] = usePinchZoom<HTMLDivElement, HTMLImageElement>();
 
   return (
     <>
