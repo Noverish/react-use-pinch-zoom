@@ -1,0 +1,13 @@
+#hierarchy .touch-area {
+  padding: 12px;
+}
+
+#hierarchy .touch-area > div {
+  padding: 12px;
+  background-color: rgba(49, 49, 196, 0.5);
+}
+
+#hierarchy .touch-area > div > div {
+  padding: 12px;
+  background-color: rgba(11, 150, 57, 0.5);
+}

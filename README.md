@@ -3,13 +3,13 @@
 
 Most of the code is from [react-pinch-and-zoom](https://github.com/conradlo/react-pinch-and-zoom)
 
-# React Pinch Zoom Hook
+# React-Use-Pinch-Zoom
 
 A react hook for pinch-to-zoom gesture interaction.
 
 ## Demo
 
-![demo1](/static/demo1.gif)
+[Demo Webpage](https://noverish.github.io/react-use-pinch-zoom/)
 
 ## Usage
 

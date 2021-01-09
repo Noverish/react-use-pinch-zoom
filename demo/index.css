@@ -1,0 +1,24 @@
+body {
+  padding: 12px;
+}
+
+#root {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+section {
+  margin: 12px 0;
+}
+
+.touch-area {
+  background-color: gray;
+}
+
+img {
+  display: block;
+}
+
+#size-diff .touch-area {
+  height: 512px;
+}

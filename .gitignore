@@ -1,2 +1,4 @@
 node_modules
 /lib
+demo-dev/
+demo-build/

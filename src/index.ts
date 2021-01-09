@@ -7,7 +7,7 @@ enum GUESTURE_TYPE {
   PINCH,
 }
 
-interface Transform {
+export interface Transform {
   zoomFactor: number;
   translate: Point.Point;
 }
@@ -19,12 +19,12 @@ interface Props {
 }
 
 type HTMLElementProps<T extends HTMLElement> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>;
-type ContainerStyle = Required<Pick<React.CSSProperties, 'overflow' | 'touchAction'>>;
-type ContentStyle = Required<Pick<React.CSSProperties, 'willChange' | 'transition' | 'transitionTimingFunction' | 'transitionDuration'>>;
-type ContainerProps<T extends HTMLElement> = Required<Pick<HTMLElementProps<T>, 'onTouchStart' | 'onTouchEnd' | 'onTouchMove'>> & { style: ContainerStyle, ref: React.RefObject<T> };
-type ContentProps<T extends HTMLElement> = { style: ContentStyle, ref: React.RefObject<T> };
+export type ContainerStyle = Required<Pick<React.CSSProperties, 'overflow' | 'touchAction'>>;
+export type ContentStyle = Required<Pick<React.CSSProperties, 'willChange' | 'transition' | 'transitionTimingFunction' | 'transitionDuration'>>;
+export type ContainerProps<T extends HTMLElement> = Required<Pick<HTMLElementProps<T>, 'onTouchStart' | 'onTouchEnd' | 'onTouchMove'>> & { style: ContainerStyle, ref: React.RefObject<T> };
+export type ContentProps<T extends HTMLElement> = { style: ContentStyle, ref: React.RefObject<T> };
 
-export default function usePinchToZoom<Container extends HTMLElement, Content extends HTMLElement>({
+function usePinchToZoom<Container extends HTMLElement, Content extends HTMLElement>({
   minZoomScale = 1.0,
   maxZoomScale = 4.0,
   onTransform,
@@ -72,7 +72,13 @@ export default function usePinchToZoom<Container extends HTMLElement, Content ex
       values.transform.translate.y = roundTransalteY
 
       if (onTransform) {
-        onTransform(values.transform)
+        onTransform({ 
+          zoomFactor: values.transform.zoomFactor,
+          translate: {
+            x: values.transform.translate.x,
+            y: values.transform.translate.y,
+          }
+        })
       }
 
       const styleString = `
@@ -124,12 +130,13 @@ export default function usePinchToZoom<Container extends HTMLElement, Content ex
           newTranslate.y -= (contentRect.bottom - containerRect.bottom) / zoomFactor;
         }
       } else {
-        if (contentRect.top < containerRect.top) {
-          newTranslate.y -= (contentRect.top - containerRect.top) / zoomFactor;
-        }
-        if (contentRect.bottom > containerRect.bottom) {
-          newTranslate.y -= (contentRect.bottom - containerRect.bottom) / zoomFactor;
-        }
+        newTranslate.y = 0;
+        // if (contentRect.top < containerRect.top) {
+        //   newTranslate.y -= (contentRect.top - containerRect.top) / zoomFactor;
+        // }
+        // if (contentRect.bottom > containerRect.bottom) {
+        //   newTranslate.y -= (contentRect.bottom - containerRect.bottom) / zoomFactor;
+        // }
       }
 
       if (contentRect.width >= containerRect.width) {
@@ -140,12 +147,13 @@ export default function usePinchToZoom<Container extends HTMLElement, Content ex
           newTranslate.x -= (contentRect.right - containerRect.right) / zoomFactor;
         }
       } else {
-        if (contentRect.left < containerRect.left) {
-          newTranslate.x -= (contentRect.left - containerRect.left) / zoomFactor;
-        }
-        if (contentRect.right > containerRect.right) {
-          newTranslate.x -= (contentRect.right - containerRect.right) / zoomFactor;
-        }
+        newTranslate.x = 0;
+        // if (contentRect.left < containerRect.left) {
+        //   newTranslate.x -= (contentRect.left - containerRect.left) / zoomFactor;
+        // }
+        // if (contentRect.right > containerRect.right) {
+        //   newTranslate.x -= (contentRect.right - containerRect.right) / zoomFactor;
+        // }
       }
 
       if (newTranslate.x !== translate.x || newTranslate.y !== translate.y) {
@@ -318,3 +326,5 @@ export default function usePinchToZoom<Container extends HTMLElement, Content ex
 
   return [containerProps, contentProps];
 }
+
+export default usePinchToZoom;
