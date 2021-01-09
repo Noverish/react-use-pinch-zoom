@@ -16,6 +16,11 @@ export default function Hierarchy() {
           </div>
         </div>
       </div>
+      <div>
+        <a href="https://github.com/Noverish/react-use-pinch-zoom/blob/master/demo/pages/hierarchy.tsx">
+          Source Code
+        </a>
+      </div>
     </section>
   )
 }

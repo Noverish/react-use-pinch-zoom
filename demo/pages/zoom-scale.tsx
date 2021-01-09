@@ -14,6 +14,11 @@ export default function Default() {
       <div className="touch-area d-inline-block" {...containerProps}>
         <img className="content" src="./lenna-256.png" {...contentProps} />
       </div>
+      <div>
+        <a href="https://github.com/Noverish/react-use-pinch-zoom/blob/master/demo/pages/zoom-scale.tsx">
+          Source Code
+        </a>
+      </div>
     </section>
   )
 }

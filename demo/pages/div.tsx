@@ -24,6 +24,11 @@ export default function Div() {
           </div>
         </div>
       </div>
+      <div>
+        <a href="https://github.com/Noverish/react-use-pinch-zoom/blob/master/demo/pages/div.tsx">
+          Source Code
+        </a>
+      </div>
     </section>
   )
 }

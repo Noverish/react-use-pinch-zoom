@@ -26,6 +26,11 @@ export default function OnTransform() {
       </div>
       <p>zoomScale: {transform.zoomFactor}</p>
       <p>translate: (x: {transform.translate.x}, y: {transform.translate.y})</p>
+      <div>
+        <a href="https://github.com/Noverish/react-use-pinch-zoom/blob/master/demo/pages/on-transform.tsx">
+          Source Code
+        </a>
+      </div>
     </section>
   )
 }

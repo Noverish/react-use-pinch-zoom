@@ -11,6 +11,11 @@ export default function SizeDiff() {
       <div className="touch-area" {...containerProps}>
         <img className="content" src="./lenna-256.png" {...contentProps} />
       </div>
+      <div>
+        <a href="https://github.com/Noverish/react-use-pinch-zoom/blob/master/demo/pages/size-diff.tsx">
+          Source Code
+        </a>
+      </div>
     </section>
   )
 }
