@@ -14,6 +14,8 @@ const App = () => {
     <>
       <h1 className="display-2">React-Use-Pinch-Zoom Demo</h1>
       <a href="https://github.com/Noverish/react-use-pinch-zoom">Github</a>
+      <br />
+      <a href="https://www.npmjs.com/package/react-use-pinch-zoom">NPM</a>
       <Default />
       <ZoomScale />
       <OnTransform />
