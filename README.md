@@ -1,5 +1,6 @@
 
-![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)
+![license](https://img.shields.io/github/license/Noverish/react-use-pinch-zoom?style=flat-square)
+![npm](https://img.shields.io/npm/v/react-use-pinch-zoom?style=flat-square)
 
 Most of the code is from [react-pinch-and-zoom](https://github.com/conradlo/react-pinch-and-zoom)
 
