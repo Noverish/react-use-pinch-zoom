@@ -1,7 +1,4 @@
-export interface Point {
-  x: number
-  y: number
-}
+import { Point } from './types';
 
 function newOriginPoint(): Point {
   return {
