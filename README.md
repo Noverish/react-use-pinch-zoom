@@ -9,6 +9,8 @@ A react hook for pinch-to-zoom gesture interaction.
 
 ## Demo
 
+![Demo Webp](https://raw.githubusercontent.com/Noverish/react-use-pinch-zoom/master/static/demo.webp)
+
 [Demo Webpage](https://noverish.github.io/react-use-pinch-zoom/)
 
 ## Usage
@@ -19,15 +21,11 @@ A react hook for pinch-to-zoom gesture interaction.
 $ npm install react-use-pinch-zoom
 ```
 
-2. Import the hook
-
-```jsx
-import usePinchZoom from 'react-use-pinch-zoom';
-```
-
-3. Get container and content props and use them
+2. Import the hook, get container and content props from hook, and use them to whatever you want to pinch zoom
 
 ```tsx
+import usePinchZoom from 'react-use-pinch-zoom';
+
 function App() {
   const [containerProps, contentProps] = usePinchZoom<HTMLDivElement, HTMLImageElement>();
 
@@ -35,12 +33,65 @@ function App() {
     <>
       <h1>Pinch Zoom</h1>
       <div {...containerProps}>
-        <img
-          src="/image.jpg"
-          {...contentProps}
-        />
+        <img src="/image.jpg" {...contentProps} />
       </div>
     </>
   );
 }
 ```
+
+3. [Optional] You can customize style of element.
+
+```tsx
+import usePinchZoom, { PinchZoomTypes } from 'react-use-pinch-zoom';
+
+function App() {
+  const [containerProps, contentProps] = usePinchZoom<HTMLDivElement, HTMLImageElement>();
+
+  const { style: containerStyle, ...restContainerProps } = containerProps;
+
+  const newStyle = {
+    display: 'inline-block',
+    ...containerStyle,
+  }
+
+  return (
+    <>
+      <h1>Pinch Zoom</h1>
+      <div style={newStyle} {...restContainerProps}>
+        <img src="/image.jpg" {...contentProps} />
+      </div>
+    </>
+  );
+}
+```
+
+## How it works
+
+`containerProps` and `contentProps` consist of below these.
+
+```typescript
+const containerProps = {
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd
+  style: {
+    overflow: 'hidden',
+    touchAction: 'none',
+  }
+  ref,
+}
+
+const contentProps = {
+  style: {
+    willChange: 'transform',
+    transition: 'transform',
+
+    transform: `scale(${zoomScale}) translate(${x}px, ${y}px)`,
+    webkitTransform: `scale(${zoomScale}) translate(${x}px, ${y}px)`,
+  }
+  ref,
+}
+```
+
+`react-use-pinch-zoom` takes control of touch event and modifies `zoomScale`, `x` and `y` values in transform style string.
