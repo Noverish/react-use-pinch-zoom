@@ -45,7 +45,7 @@ function App() {
 3. [Optional] You can customize style of element.
 
 ```tsx
-import usePinchZoom, { PinchZoomTypes } from 'react-use-pinch-zoom';
+import usePinchZoom from 'react-use-pinch-zoom';
 
 function App() {
   const [containerProps, contentProps] = usePinchZoom<HTMLDivElement, HTMLImageElement>();
@@ -68,6 +68,26 @@ function App() {
 }
 ```
 
+## Options
+
+|name         | Type                           | Default   |
+|-------------|--------------------------------|-----------|
+|minZoomScale | number                         | 1.0       |
+|maxZoomScale | number                         | 4.0       |
+|onTransform  | (transform: Transform) => void | undefined |
+
+```tsx
+import usePinchZoom, { PinchZoomTypes } from 'react-use-pinch-zoom';
+
+const [containerProps, contentProps] = usePinchZoom({
+  minZoomScale: 0.5,
+  maxZoomScale: 2.0,
+  onTransform: (transform: PinchZoomTypes.Transform) => {
+    console.log(transform);
+  },
+});
+```
+
 ## How it works
 
 `containerProps` and `contentProps` consist of below these.
@@ -80,7 +100,7 @@ const containerProps = {
   style: {
     overflow: 'hidden',
     touchAction: 'none',
-  }
+  },
   ref,
 }
 
@@ -91,7 +111,7 @@ const contentProps = {
 
     transform: `scale(${zoomScale}) translate(${x}px, ${y}px)`,
     webkitTransform: `scale(${zoomScale}) translate(${x}px, ${y}px)`,
-  }
+  },
   ref,
 }
 ```
