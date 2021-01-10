@@ -1,6 +1,6 @@
 {
   "name": "react-use-pinch-zoom",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Hyunsub Kim (noverish)",
   "description": "A react hook for pinch-to-zoom gesture interaction.",
   "keywords": [
