@@ -1,6 +1,7 @@
 
 ![license](https://img.shields.io/github/license/Noverish/react-use-pinch-zoom?style=flat-square)
-![npm](https://img.shields.io/npm/v/react-use-pinch-zoom?style=flat-square)
+[![npm version](https://img.shields.io/npm/v/react-use-pinch-zoom?style=flat-square)](https://www.npmjs.com/package/react-use-pinch-zoom)
+[![npm downloads](https://img.shields.io/npm/dm/react-use-pinch-zoom?style=flat-square)](https://www.npmjs.com/package/react-use-pinch-zoom)
 
 Most of the code is from [react-pinch-and-zoom](https://github.com/conradlo/react-pinch-and-zoom)
 
