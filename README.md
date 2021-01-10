@@ -74,7 +74,7 @@ function App() {
 const containerProps = {
   onTouchStart,
   onTouchMove,
-  onTouchEnd
+  onTouchEnd,
   style: {
     overflow: 'hidden',
     touchAction: 'none',
