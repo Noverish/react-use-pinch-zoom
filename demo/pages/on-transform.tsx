@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import usePinchZoom, { Transform } from '../../src';
+import usePinchZoom from '../../src';
+import { Transform } from '../../src/types';
 
 export default function OnTransform() {
   const [transform, setTransform] = useState({

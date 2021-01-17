@@ -1,4 +1,4 @@
-import { Point } from './types';
+import { Point, Transform } from './types';
 
 function newOriginPoint(): Point {
   return {
@@ -58,6 +58,30 @@ function getTouchesCoordinate(syntheticEvent: React.SyntheticEvent): Point[] {
   }));
 }
 
+function transformDOMRect(rect: DOMRect, transform: Transform): DOMRect {
+  const { zoomFactor, translate } = transform;
+  const r = (zoomFactor - 1) / 2
+
+  const width = rect.width * zoomFactor;
+  const height = rect.height * zoomFactor;
+  const top = rect.top + translate.y - r * rect.height;
+  const bottom = rect.bottom + translate.y + r * rect.height;
+  const left = rect.left + translate.x - r * rect.width;
+  const right = rect.right + translate.x + r * rect.width;
+
+  return {
+    ...rect,
+    width,
+    height,
+    top,
+    bottom,
+    left,
+    right,
+    x: left,
+    y: top,
+  }
+}
+
 export {
   newOriginPoint,
   distance,
@@ -66,4 +90,5 @@ export {
   map,
   scale,
   getTouchesCoordinate,
+  transformDOMRect,
 }

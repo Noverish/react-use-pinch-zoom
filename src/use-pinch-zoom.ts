@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { Options, ContainerProps, ContentProps, ContainerStyle, ContentStyle, Transform } from './types';
+import { ContainerProps, ContainerStyle, ContentProps, ContentStyle, Options, Transform } from './types';
 import * as Point from './Point';
 
 enum GUESTURE_TYPE {
@@ -16,6 +16,7 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
   const containerRef = useRef<Container>(null);
   const contentRef = useRef<Content>(null);
   const valuesRef = useRef({
+    originContentRect: null as DOMRect | null,
     transform: {
       zoomFactor: 1.0,
       translate: Point.newOriginPoint(),
@@ -28,7 +29,7 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
 
     panStartPoint: Point.newOriginPoint(),
     panStartTranslate: Point.newOriginPoint(),
-  })
+  });
 
   const setTransform = useCallback(
     ({
@@ -56,7 +57,7 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
       values.transform.translate.y = roundTransalteY
 
       if (onTransform) {
-        onTransform({ 
+        onTransform({
           zoomFactor: values.transform.zoomFactor,
           translate: {
             x: values.transform.translate.x,
@@ -66,8 +67,8 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
       }
 
       const styleString = `
-        scale(${zoomFactor})
         translate(${roundTransalteX}px, ${roundTransalteY}px)
+        scale(${zoomFactor})
       `
 
       content.style.transform = styleString
@@ -93,7 +94,7 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
       const container = containerRef.current;
       const content = contentRef.current;
       const values = valuesRef.current;
-      if (!container || !content) {
+      if (!container || !content || !values.originContentRect) {
         return
       }
       const { zoomFactor, translate } = values.transform
@@ -104,16 +105,14 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
       const newTranslate = { ...translate };
 
       const containerRect = container.getBoundingClientRect();
-      const contentRect = content.getBoundingClientRect();
-
-      const r = (zoomFactor - 1) / (2 * zoomFactor);
+      const contentRect = Point.transformDOMRect(values.originContentRect, values.transform);
 
       if (contentRect.height > containerRect.height) {
         if (contentRect.top > containerRect.top) {
-          newTranslate.y = r * containerRect.height;
+          newTranslate.y -= contentRect.top - containerRect.top;
         }
         if (contentRect.bottom < containerRect.bottom) {
-          newTranslate.y = -r * containerRect.height;
+          newTranslate.y += containerRect.bottom - contentRect.bottom;
         }
       } else {
         newTranslate.y = 0;
@@ -121,10 +120,10 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
 
       if (contentRect.width > containerRect.width) {
         if (contentRect.left > containerRect.left) {
-          newTranslate.x = r * containerRect.width;
+          newTranslate.x -= contentRect.left - containerRect.left;
         }
         if (contentRect.right < containerRect.right) {
-          newTranslate.x = -r * containerRect.width;
+          newTranslate.x += containerRect.right - contentRect.right;
         }
       } else {
         newTranslate.x = 0;
@@ -155,8 +154,13 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
 
       const pinchCurrentTouchPointDist = Point.distance(p1, p2)
       const ratioTouchPointDist = pinchCurrentTouchPointDist / values.pinchStartTouchPointDist
-      const newZoomFactor = values.pinchStartZoomFactor * ratioTouchPointDist
-      setTransform({ zoomFactor: newZoomFactor })
+      const newZoomFactor = values.pinchStartZoomFactor * ratioTouchPointDist;
+      const newTranslate = {
+        x: values.transform.translate.x / values.transform.zoomFactor * newZoomFactor,
+        y: values.transform.translate.y / values.transform.zoomFactor * newZoomFactor,
+      }
+
+      setTransform({ zoomFactor: newZoomFactor, translate: newTranslate })
     },
     [setTransform],
   )
@@ -185,13 +189,11 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
     (syntheticEvent: React.SyntheticEvent) => {
       const values = valuesRef.current;
       const [dragPoint] = Point.getTouchesCoordinate(syntheticEvent)
-      const { zoomFactor } = values.transform;
       const origin = values.panStartPoint
       const prevTranslate = values.panStartTranslate
 
       const dragOffset = Point.offset(dragPoint, origin)
-      const adjustedZoomOffset = Point.scale(dragOffset, 1 / zoomFactor)
-      const nextTranslate = Point.sum(adjustedZoomOffset, prevTranslate)
+      const nextTranslate = Point.sum(dragOffset, prevTranslate)
       setTransform({ translate: nextTranslate })
     },
     [setTransform],
@@ -211,6 +213,9 @@ function usePinchZoom<Container extends HTMLElement, Content extends HTMLElement
       const values = valuesRef.current;
       if (!container || !content) {
         return
+      }
+      if (!values.originContentRect) {
+        values.originContentRect = content.getBoundingClientRect();
       }
       const { nativeEvent } = syntheticEvent
       if (!(nativeEvent instanceof TouchEvent)) {
